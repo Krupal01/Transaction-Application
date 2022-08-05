@@ -10,59 +10,34 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: transaction
-          .map((e) => Card(
-                margin: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          "\$ ${e.amount}",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.red, width: 1.0),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              e.title,
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0),
-                            ),
-                            Text(
-                              DateFormat.yMMMd().format(e.dateTime),
-                              style: const TextStyle(
-                                color: Color.fromARGB(221, 50, 50, 50),
-                                fontWeight: FontWeight.normal,
-                                fontSize: 10.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+    return Container(
+      height: 300,
+      padding: const EdgeInsets.all(5),
+      child: ListView.builder(
+          itemCount: transaction.length,
+          itemBuilder: (context, index) {
+            return Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    radius: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FittedBox(
+                          child: Text("\$ ${transaction[index].amount}")),
+                    ),
                   ),
-                ),
-              ))
-          .toList(),
+                  title: Text(
+                    transaction[index].title,
+                  ),
+                  subtitle: Text(
+                    DateFormat.yMMMd().format(transaction[index].dateTime),
+                  ),
+                  trailing: IconButton(
+                      onPressed: () => {}, icon: const Icon(Icons.delete)),
+                ));
+          }),
     );
   }
 }
