@@ -4,8 +4,10 @@ import 'package:transaction_app/model/transaction_model.dart';
 
 class TransactionList extends StatelessWidget {
   final List<TransactionModel> transaction;
+  final Function deleteTransaction;
 
-  const TransactionList({Key? key, required this.transaction})
+  const TransactionList(
+      {Key? key, required this.transaction, required this.deleteTransaction})
       : super(key: key);
 
   @override
@@ -35,7 +37,9 @@ class TransactionList extends StatelessWidget {
                     DateFormat.yMMMd().format(transaction[index].dateTime),
                   ),
                   trailing: IconButton(
-                      onPressed: () => {}, icon: const Icon(Icons.delete)),
+                      onPressed: () =>
+                          {deleteTransaction(transaction[index].id)},
+                      icon: const Icon(Icons.delete)),
                 ));
           }),
     );

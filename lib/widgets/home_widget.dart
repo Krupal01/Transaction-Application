@@ -25,6 +25,12 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      transactionList.removeWhere((element) => element.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,7 +38,10 @@ class _HomeState extends State<Home> {
         NewTransaction(
           addNew: _addNewTransaction,
         ),
-        TransactionList(transaction: transactionList)
+        TransactionList(
+          transaction: transactionList,
+          deleteTransaction: _deleteTransaction,
+        )
       ],
     );
   }
