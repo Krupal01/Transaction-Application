@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:transaction_app/model/transaction_model.dart';
 import 'package:transaction_app/widgets/new_transaction.dart';
 import 'package:transaction_app/widgets/transasction_list.dart';
+import 'package:transaction_app/widgets/week_chart.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -44,6 +45,13 @@ class _HomeState extends State<Home> {
     );
   }
 
+  List<TransactionModel> get _recentTransaction {
+    return transactionList.where((element) {
+      return element.dateTime
+          .isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +69,7 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
+          WeekChart(recentTransactions: _recentTransaction),
           TransactionList(
             transaction: transactionList,
             deleteTransaction: _deleteTransaction,
