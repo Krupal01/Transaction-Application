@@ -31,18 +31,42 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewTransaction(addNew: _addNewTransaction),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        NewTransaction(
-          addNew: _addNewTransaction,
-        ),
-        TransactionList(
-          transaction: transactionList,
-          deleteTransaction: _deleteTransaction,
-        )
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Personal Expenses"),
+        actions: [
+          IconButton(
+              onPressed: () => _showBottomSheet(context),
+              icon: const Icon(Icons.add))
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showBottomSheet(context),
+        child: const Icon(Icons.add),
+      ),
+      body: Column(
+        children: [
+          TransactionList(
+            transaction: transactionList,
+            deleteTransaction: _deleteTransaction,
+          )
+        ],
+      ),
     );
   }
 }
