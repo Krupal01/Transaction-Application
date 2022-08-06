@@ -18,10 +18,10 @@ class _HomeState extends State<Home> {
         DateTime(2012, 2, 5, 2, 30).toString()),
   ];
 
-  void _addNewTransaction(String inTitle, double inAmount) {
+  void _addNewTransaction(String inTitle, double inAmount, DateTime date) {
     setState(() {
-      transactionList.add(TransactionModel(
-          inTitle, DateTime.now(), inAmount, DateTime.now().toString()));
+      transactionList.add(
+          TransactionModel(inTitle, date, inAmount, DateTime.now().toString()));
     });
   }
 

@@ -33,6 +33,22 @@ class _NewTransactionState extends State<NewTransaction> {
     });
   }
 
+  void _submitTransaction() {
+    if (titleController.text.isEmpty ||
+        double.parse(amountController.text) <= 0 ||
+        _selectedDate == null) {
+      return;
+    }
+
+    widget.addNew(
+      titleController.text,
+      double.parse(amountController.text),
+      _selectedDate,
+    );
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -81,10 +97,7 @@ class _NewTransactionState extends State<NewTransaction> {
               width: double.infinity,
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {
-                  widget.addNew(titleController.text,
-                      double.parse(amountController.text));
-                },
+                onPressed: _submitTransaction,
                 child: const Text("Save Data"),
               ))
         ],
