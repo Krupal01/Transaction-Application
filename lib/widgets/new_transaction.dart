@@ -1,10 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   final Function addNew;
+
+  const NewTransaction({Key? key, required this.addNew}) : super(key: key);
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   final TextEditingController titleController = TextEditingController();
+
   final TextEditingController amountController = TextEditingController();
-  NewTransaction({Key? key, required this.addNew}) : super(key: key);
+
+  DateTime? _selectedDate;
+
+  void _selectDate() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2021),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +61,28 @@ class NewTransaction extends StatelessWidget {
             ),
           ),
           Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Text(_selectedDate == null
+                    ? "No Date Choosen!"
+                    : "Picked Date : ${DateFormat.yMd().format(_selectedDate!)}"),
+                TextButton(
+                    onPressed: _selectDate,
+                    child: Text(
+                      "Choose Date",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ))
+              ],
+            ),
+          ),
+          Container(
               padding: const EdgeInsets.all(5.0),
               width: double.infinity,
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  addNew(titleController.text,
+                  widget.addNew(titleController.text,
                       double.parse(amountController.text));
                 },
                 child: const Text("Save Data"),
