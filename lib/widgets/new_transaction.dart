@@ -51,56 +51,63 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(5.0),
-            child: TextField(
-              controller: titleController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Title',
-                hintText: 'Title',
+    return SingleChildScrollView(
+      child: Card(
+        margin: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                top: 10,
+                right: 10,
+                left: 10,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+              ),
+              child: TextField(
+                controller: titleController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Title',
+                  hintText: 'Title',
+                ),
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(5.0),
-            child: TextField(
-              controller: amountController,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Amount',
-                  hintText: 'Amount'),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Text(_selectedDate == null
-                    ? "No Date Choosen!"
-                    : "Picked Date : ${DateFormat.yMd().format(_selectedDate!)}"),
-                TextButton(
-                    onPressed: _selectDate,
-                    child: Text(
-                      "Choose Date",
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ))
-              ],
-            ),
-          ),
-          Container(
+            Container(
               padding: const EdgeInsets.all(5.0),
-              width: double.infinity,
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: _submitTransaction,
-                child: const Text("Save Data"),
-              ))
-        ],
+              child: TextField(
+                controller: amountController,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Amount',
+                    hintText: 'Amount'),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text(_selectedDate == null
+                      ? "No Date Choosen!"
+                      : "Picked Date : ${DateFormat.yMd().format(_selectedDate!)}"),
+                  TextButton(
+                      onPressed: _selectDate,
+                      child: Text(
+                        "Choose Date",
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ))
+                ],
+              ),
+            ),
+            Container(
+                padding: const EdgeInsets.all(5.0),
+                width: double.infinity,
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: _submitTransaction,
+                  child: const Text("Save Data"),
+                ))
+          ],
+        ),
       ),
     );
   }
