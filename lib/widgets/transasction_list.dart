@@ -15,13 +15,14 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(5),
-      child: ListView.builder(
-          itemCount: transaction.length,
-          itemBuilder: (context, index) {
-            return TransactionItem(
-                transaction: transaction[index],
-                deleteTransaction: deleteTransaction);
-          }),
+      child: ListView( 
+        children : transaction
+        .map((tx) => TransactionItem(
+                key: ValueKey(tx.id),
+                transaction: tx,
+                deleteTransaction: deleteTransaction)
+        ).toList()
+      ),
     );
   }
 }
