@@ -48,31 +48,44 @@ class _HomeState extends State<Home> {
   List<TransactionModel> get _recentTransaction {
     return transactionList.where((element) {
       return element.dateTime
-          .isAfter(DateTime.now().subtract(Duration(days: 7)));
+          .isAfter(DateTime.now().subtract(const Duration(days: 7)));
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text("Personal Expenses"),
+      actions: [
+        IconButton(
+            onPressed: () => _showBottomSheet(context),
+            icon: const Icon(Icons.add))
+      ],
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Personal Expenses"),
-        actions: [
-          IconButton(
-              onPressed: () => _showBottomSheet(context),
-              icon: const Icon(Icons.add))
-        ],
-      ),
+      appBar: appBar,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showBottomSheet(context),
         child: const Icon(Icons.add),
       ),
       body: Column(
         children: [
-          WeekChart(recentTransactions: _recentTransaction),
-          TransactionList(
-            transaction: transactionList,
-            deleteTransaction: _deleteTransaction,
+          SizedBox(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.4,
+              child: WeekChart(recentTransactions: _recentTransaction)),
+          SizedBox(
+            height: (MediaQuery.of(context).size.height -
+                    appBar.preferredSize.height -
+                    MediaQuery.of(context).padding.top) *
+                0.6,
+            child: TransactionList(
+              transaction: transactionList,
+              deleteTransaction: _deleteTransaction,
+            ),
           )
         ],
       ),
