@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:transaction_app/model/transaction_model.dart';
 import 'package:transaction_app/widgets/new_transaction.dart';
@@ -65,7 +66,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: appBar,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: /*Platform.isIOS ? Container() :*/ FloatingActionButton(
         onPressed: () => _showBottomSheet(context),
         child: const Icon(Icons.add),
       ),
